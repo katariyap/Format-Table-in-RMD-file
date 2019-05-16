@@ -1,0 +1,51 @@
+---
+title: "Final_PDF_Report_Punam"
+output: pdf_document
+---
+```{r include=FALSE}
+MyPackages = c("randomNames","Hmisc","kableExtra","magrittr")
+lapply(MyPackages, require, character = T)
+```
+
+```{r results='asis',message=FALSE,echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list=ls()); cat("\14")
+Participants = randomNames(20, ethnicity = 5, which.names = "first")
+df = as.data.frame(Participants)
+
+df$Item1 = sample(size = 20, 1:100, replace = F); label(df$Item1) <- "Domain 1 
+- Set up: Item 1";
+df$Item2 = sample(size = 20, 1:100, replace = F); label(df$Item2) <- "Domain 1 
+- Set up: Item 2";
+df$Item3 = sample(size = 20, 1:100, replace = F); label(df$Item3) <- "Domain 1 
+- Informed Consent: Item 3";
+df$Item4 = sample(size = 20, 1:100, replace = F); label(df$Item4) <- "Domain 1 
+- Informed Consent: Item 4";
+df$Item5 = sample(size = 20, 1:100, replace = F); label(df$Item5) <- "Domain 1 
+- Informed Consent: Item 5";
+df$Item6 = sample(size = 20, 1:100, replace = F); label(df$Item6) <- "Domain 1 
+- Informed Consent: Item 6";
+df$Item7 = sample(size = 20, 1:100, replace = F); label(df$Item7) <- "Domain 2 
+- Time Out: Item 7";
+df$Item8 = sample(size = 20, 1:100, replace = F); label(df$Item8) <- "Domain 3 
+- Confirmation: Item 8";
+df$Item9 = sample(size = 20, 1:100, replace = F); label(df$Item9) <- "Domain 3 
+- Confirmation: Item 9";
+df$Item10 = sample(size = 20, 1:100, replace = F); label(df$Item10) <- "Domain 3 
+- Confirmation: Item 10";
+df$Item11 = sample(size = 20, 1:100, replace = F); label(df$Item11) <- "Domain 3 
+- Confirmation: Item 11";
+df1<-df[-1]
+
+collapse_rows_dt <- data.frame(Domains = c(rep("Domain 1", 6),rep("Domain2",1)
+,rep("Domain 3",4)),step = c(rep("set up", 2), rep("Informed Concent", 4), 
+rep("Time Out", 1), rep("Confirmation", 4)),Mean=as.numeric(colMeans(df1)),
+Item_Labels=c("Label Item 1","Label Item 2","Label Item 3","Label Item 4",
+              "Label Item 5","Label Item 6","Label Item 7","Label Item 8",
+              "Label Item 9","Label Item 10","Label Item 11"))
+
+kable(collapse_rows_dt, align = "c") %>%
+    kable_styling(full_width = F,c("striped", "bordered")) %>%
+    column_spec(1, bold = T) %>%
+    collapse_rows(columns = 1:2, valign = "top")
+```
